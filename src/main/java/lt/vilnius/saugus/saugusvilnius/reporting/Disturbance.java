@@ -3,6 +3,8 @@ package lt.vilnius.saugus.saugusvilnius.reporting;
 import lt.vilnius.saugus.saugusvilnius.GoodCitizen;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,6 +18,8 @@ public class Disturbance {
     @GeneratedValue
     private Long disturbanceId;
     private String location;
+
+    @Enumerated(EnumType.STRING)
     private DisturbanceType disturbanceType;
 
     @ManyToOne
