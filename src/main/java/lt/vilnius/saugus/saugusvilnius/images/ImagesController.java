@@ -4,17 +4,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import lt.vilnius.saugus.saugusvilnius.ResourceNotFoundException;
 import lt.vilnius.saugus.saugusvilnius.reporting.ReportImage;
 
 @RestController
@@ -31,25 +29,23 @@ public class ImagesController {
 		
 		return images.stream().map(i -> i.getContent()).collect(Collectors.toList());
 	}
-	
-	@GetMapping(value="/{imageId}")
-	public String getImageById(@PathVariable Long imageId) {
-		
-		return repository.findById(imageId)
-		.orElseThrow(ResourceNotFoundException::new)
-		.getContent();
-	}
-	
-	@PostMapping
-	public Long saveImage(@RequestBody ImageDto imageDto, HttpServletRequest request) {
-//			System.out.println(imageDto.getContent());
+
+	@PostMapping("")
+	public String saveImage(@RequestParam("imageValue") String imageValue, HttpServletRequest request) {
+		try {
+			System.out.println(imageValue);
+
+			byte[] imageByte = Base64.decodeBase64(imageValue);
 
 			ReportImage reportImage = new ReportImage();
 			
-			reportImage.setContent(imageDto.getContent());
+			reportImage.setContent(imageByte.toString());
 			
 			repository.save(reportImage);
 			
-			return reportImage.getReportImageId();
+			return "success ";
+		} catch (Exception e) {
+			return "error = " + e;
+		}
 	}
 }

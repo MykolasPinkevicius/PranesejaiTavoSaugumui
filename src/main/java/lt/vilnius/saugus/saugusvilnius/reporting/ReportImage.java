@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
 @Entity
 public class ReportImage {
@@ -15,7 +14,6 @@ public class ReportImage {
     @Column(name = "report_image_id")
     private Long reportImageId;
 
-    @Lob
     private String content;
 
     public Long getReportImageId() {

@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -16,7 +15,7 @@ import java.util.List;
 public class Disturbance {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
     private Long disturbanceId;
     private String location;
 
@@ -28,23 +27,9 @@ public class Disturbance {
     private String description;
 
     @OneToMany
-    private List<ReportImage> reportImages;    
+    private List<ReportImage> reportImages;
 
-    public Disturbance(String location, DisturbanceType disturbanceType, GoodCitizen goodCitizen, String description,
-			List<ReportImage> reportImages) {
-		super();
-		this.location = location;
-		this.disturbanceType = disturbanceType;
-		this.goodCitizen = goodCitizen;
-		this.description = description;
-		this.reportImages = reportImages;
-	}
-    
-    protected Disturbance() {
-    	
-    }
-
-	public Long getDisturbanceId() {
+    public Long getDisturbanceId() {
         return disturbanceId;
     }
 
