@@ -41,7 +41,7 @@ public class Disturbance {
         this.goodCitizen = goodCitizen;
         this.description = description;
         this.reportImages = reportImages;
-        this.status = DisturbanceStatus.ACTIVE;
+        this.status = DisturbanceStatus.NEW;
     }
 
     protected Disturbance() {
