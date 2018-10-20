@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class ExpServiceImpl implements ExpService {
+public class UserLevelServiceImpl implements UserLevelService {
+
     @Override
     public UserLevel addExp(GoodCitizen goodCitizen, BigDecimal expAmount) {
         return null;
@@ -14,6 +15,6 @@ public class ExpServiceImpl implements ExpService {
 
     @Override
     public UserLevel getUserLevel(GoodCitizen goodCitizen) {
-        return null;
+        return new UserLevel(goodCitizen);
     }
 }

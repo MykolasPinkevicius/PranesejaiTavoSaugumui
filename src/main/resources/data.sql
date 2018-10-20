@@ -1,4 +1,6 @@
-INSERT INTO good_citizen VALUES (1, 'Batman');
+INSERT INTO good_citizen
+(good_citizen_id, name, exp)
+VALUES (1, 'Batman', 120);
 
 INSERT INTO report_image VALUES (1, 'gdf57g5df4sdfg5adfdfs45gsd5gd5bsdf');
 
