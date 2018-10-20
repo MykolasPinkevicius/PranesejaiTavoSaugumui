@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 public class DisturbanceController {
@@ -41,11 +40,14 @@ public class DisturbanceController {
 
     @CrossOrigin(origins="*")
     @GetMapping(value = "/v1/disturbances")
-    public Stream<DisturbanceDto> getDisturbances() {
-        return disturbanceRepository
+    public List<DisturbanceDto> getDisturbances() {
+        List<DisturbanceDto> disturbanceDtos = disturbanceRepository
                 .findAll()
                 .stream()
-                .map(this::toDto);
+                .map(this::toDto)
+                .collect(Collectors.toList());
+        disturbanceDtos.forEach(disturbanceDto -> disturbanceDto.getReportImages().forEach(reportImage -> reportImage.setContent(null)));
+        return disturbanceDtos;
     }
 
     @CrossOrigin(origins="*")
