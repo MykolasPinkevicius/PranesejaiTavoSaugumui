@@ -1,1 +1,27 @@
-<!-- Test -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map test</title>
+    <meta charset="utf-8">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK8xExhmvEAYJjdkU_Kc4rBagJxbA2gh0&callback=initMap"async defer></script>
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+    <!-- This stylesheet contains specific styles for displaying
+         the map on this page. Replace it with your own styles as
+         described in the documentation:
+         https://developers.google.com/maps/documentation/javascript/tutorial
+    -->
+    <link rel="stylesheet" href="/maps/documentation/javascript/cgc/demos.css">
+</head>
+<body>
+    <!-- <div id="viewDiv"></div> -->
+    <div id="map"></div>
+    <div id="viewInfo">
+        <div id="viewName"></div>
+        <div id="viewMsg"></div>
+    </div>
+
+    <script type="text/javascript" google.maps.event.addDomListener(window, 'load', initialize); ></script>
+    <script src="js/jQuery.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+</body>
+</html> 
