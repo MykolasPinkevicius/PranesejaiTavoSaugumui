@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class ImagesController {
 		return images.stream().map(i -> i.getContent()).collect(Collectors.toList());
 	}
 
+	@CrossOrigin(origins="*")
 	@GetMapping(value="/{imageId}")
 	public String getImageById(@PathVariable Long imageId) {
 

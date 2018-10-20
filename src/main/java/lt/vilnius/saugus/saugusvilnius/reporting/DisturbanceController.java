@@ -48,6 +48,7 @@ public class DisturbanceController {
                 .map(this::toDto);
     }
 
+    @CrossOrigin(origins="*")
     @GetMapping(value = "/v1/disturbances/{disturbanceId}")
     public DisturbanceDto getDisturbance(@PathVariable Long disturbanceId) {
         return this.toDto(disturbanceRepository.findById(disturbanceId)

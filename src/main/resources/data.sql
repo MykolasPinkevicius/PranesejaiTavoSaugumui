@@ -1,6 +1,14 @@
 INSERT INTO good_citizen
 (good_citizen_id, name, exp)
-VALUES (1, 'Batman', 120);
+VALUES (1, 'Tomas', 120);
+
+INSERT INTO good_citizen
+(good_citizen_id, name, exp)
+VALUES (2, 'Petras', 310);
+
+INSERT INTO good_citizen
+(good_citizen_id, name, exp)
+VALUES (3, 'Romas', 260);
 
 INSERT INTO report_image VALUES (1, 'gdf57g5df4sdfg5adfdfs45gsd5gd5bsdf');
 
@@ -8,8 +16,28 @@ INSERT INTO report_image VALUES (2, 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAA
 
 INSERT INTO disturbance
 (disturbance_id, location, disturbance_type, GOOD_CITIZEN_GOOD_CITIZEN_ID, description)
-VALUES (1, '12.5,56.8', 'WASTE', 1, 'Waste at my doorstep');
+VALUES (1, '54.714923,25.293469', 'WASTE', 1, 'Waste at my doorstep');
 
 INSERT INTO DISTURBANCE_REPORT_IMAGES
 (DISTURBANCE_DISTURBANCE_ID, REPORT_IMAGES_REPORT_IMAGE_ID)
-VALUES (1, 1);
+VALUES (1, 2);
+
+INSERT INTO disturbance
+(disturbance_id, location, disturbance_type, GOOD_CITIZEN_GOOD_CITIZEN_ID, description)
+VALUES (2, '54.701404,25.275756', 'WASTE', 2, 'Waste at my doorstep');
+
+INSERT INTO DISTURBANCE_REPORT_IMAGES
+(DISTURBANCE_DISTURBANCE_ID, REPORT_IMAGES_REPORT_IMAGE_ID)
+VALUES (2, 2);
+
+INSERT INTO disturbance
+(disturbance_id, location, disturbance_type, GOOD_CITIZEN_GOOD_CITIZEN_ID, description)
+VALUES (3, '54.676927,25.262697', 'WASTE', 3, 'Waste at my doorstep');
+
+INSERT INTO DISTURBANCE_REPORT_IMAGES
+(DISTURBANCE_DISTURBANCE_ID, REPORT_IMAGES_REPORT_IMAGE_ID)
+VALUES (3, 2);
+
+--54.714923, 25.293469
+--54.701404, 25.275756
+--54.676927, 25.262697
