@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class ReportImage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_image_id")
     private Long reportImageId;
 
