@@ -1,8 +1,9 @@
 package lt.vilnius.saugus.saugusvilnius.reporting;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import lt.vilnius.saugus.saugusvilnius.GoodCitizen;
+import lt.vilnius.saugus.saugusvilnius.GoodCitizenRepository;
+import lt.vilnius.saugus.saugusvilnius.ResourceNotFoundException;
+import lt.vilnius.saugus.saugusvilnius.images.ImagesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lt.vilnius.saugus.saugusvilnius.GoodCitizen;
-import lt.vilnius.saugus.saugusvilnius.GoodCitizenRepository;
-import lt.vilnius.saugus.saugusvilnius.ResourceNotFoundException;
-import lt.vilnius.saugus.saugusvilnius.images.ImagesRepository;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 public class DisturbanceController {
@@ -40,27 +41,30 @@ public class DisturbanceController {
 
     @CrossOrigin(origins="*")
     @GetMapping(value = "/v1/disturbances")
-    public List<Disturbance> getDisturbances() {
-        return disturbanceRepository.findAll();
+    public Stream<DisturbanceDto> getDisturbances() {
+        return disturbanceRepository
+                .findAll()
+                .stream()
+                .map(this::toDto);
     }
 
     @GetMapping(value = "/v1/disturbances/{disturbanceId}")
-    public Disturbance getDisturbance(@PathVariable Long disturbanceId) {
-        return disturbanceRepository.findById(disturbanceId)
-                .orElseThrow(DisturbanceNotFoundException::new);
+    public DisturbanceDto getDisturbance(@PathVariable Long disturbanceId) {
+        return this.toDto(disturbanceRepository.findById(disturbanceId)
+                                  .orElseThrow(DisturbanceNotFoundException::new));
     }
 
     private Disturbance toEntity(ReportDisturbanceDto reportDisturbanceDto) {
         GoodCitizen goodCitizen = goodCitizenRepository.findById(reportDisturbanceDto.getGoodCitizenId())
-                .orElseThrow(() -> new ResourceNotFoundException());
+                .orElseThrow(ResourceNotFoundException::new);
 
         List<ReportImage> reportImages = reportDisturbanceDto.getReportImages()
                 .stream()
-                .map(imageId -> {
-                    return imagesRepository.findById(imageId)
-                            .orElseThrow(() -> new ResourceNotFoundException());
-
-                }).collect(Collectors.toList());
+                .map(imageId ->
+                             imagesRepository.findById(imageId)
+                                     .orElseThrow(ResourceNotFoundException::new)
+                )
+                .collect(Collectors.toList());
 
         return new Disturbance(
                 reportDisturbanceDto.getLocation(),
@@ -69,5 +73,20 @@ public class DisturbanceController {
                 reportDisturbanceDto.getDescription(),
                 reportImages
         );
+    }
+
+    private DisturbanceDto toDto(Disturbance disturbance) {
+        DisturbanceDto disturbanceDto = new DisturbanceDto();
+        disturbanceDto.setDisturbanceId(disturbance.getDisturbanceId());
+
+        String[] posArray = disturbance.getLocation().split(",");
+        disturbanceDto.setLocation(new Location(new BigDecimal(posArray[0]), new BigDecimal(posArray[1])));
+
+        disturbanceDto.setDisturbanceType(disturbance.getDisturbanceType());
+        disturbanceDto.setGoodCitizen(disturbance.getGoodCitizen());
+        disturbanceDto.setDescription(disturbance.getDescription());
+        disturbanceDto.setReportImages(disturbance.getReportImages());
+
+        return disturbanceDto;
     }
 }
