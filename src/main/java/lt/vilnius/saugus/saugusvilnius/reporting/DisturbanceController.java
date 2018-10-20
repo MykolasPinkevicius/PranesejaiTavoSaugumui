@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +59,22 @@ public class DisturbanceController {
                                   .orElseThrow(DisturbanceNotFoundException::new));
     }
 
+    @CrossOrigin(origins = "*")
+    @PutMapping(value = "/v1/disturbances/{disturbanceId}/status")
+    @Transactional
+    public DisturbanceStatusDto updateDisturbanceStatus(
+            @PathVariable Long disturbanceId,
+            @RequestBody DisturbanceStatusDto disturbanceStatusDto
+    ) {
+        Disturbance disturbance = disturbanceRepository
+                .findById(disturbanceId)
+                .orElseThrow(ResourceNotFoundException::new);
+
+        disturbance.setStatus(disturbanceStatusDto.getStatus());
+
+        return disturbanceStatusDto;
+    }
+
     private Disturbance toEntity(ReportDisturbanceDto reportDisturbanceDto) {
         GoodCitizen goodCitizen = goodCitizenRepository.findById(reportDisturbanceDto.getGoodCitizenId())
                 .orElseThrow(ResourceNotFoundException::new);
@@ -89,6 +107,7 @@ public class DisturbanceController {
         disturbanceDto.setGoodCitizen(disturbance.getGoodCitizen());
         disturbanceDto.setDescription(disturbance.getDescription());
         disturbanceDto.setReportImages(disturbance.getReportImages());
+        disturbanceDto.setStatus(disturbance.getStatus());
 
         return disturbanceDto;
     }

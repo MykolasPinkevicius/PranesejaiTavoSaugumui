@@ -30,6 +30,9 @@ public class Disturbance {
     @OneToMany
     private List<ReportImage> reportImages;
 
+    @Enumerated(EnumType.STRING)
+    private DisturbanceStatus status;
+
     public Disturbance(String location, DisturbanceType disturbanceType, GoodCitizen goodCitizen, String description,
                        List<ReportImage> reportImages) {
         super();
@@ -38,6 +41,7 @@ public class Disturbance {
         this.goodCitizen = goodCitizen;
         this.description = description;
         this.reportImages = reportImages;
+        this.status = DisturbanceStatus.ACTIVE;
     }
 
     protected Disturbance() {
@@ -90,5 +94,13 @@ public class Disturbance {
 
     public void setReportImages(List<ReportImage> reportImages) {
         this.reportImages = reportImages;
+    }
+
+    public DisturbanceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DisturbanceStatus status) {
+        this.status = status;
     }
 }

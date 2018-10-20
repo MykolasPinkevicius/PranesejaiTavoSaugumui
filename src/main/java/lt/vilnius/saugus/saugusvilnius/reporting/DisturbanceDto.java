@@ -12,6 +12,7 @@ public class DisturbanceDto {
     private GoodCitizen goodCitizen;
     private String description;
     private List<ReportImage> reportImages;
+    private DisturbanceStatus status;
 
     public Long getDisturbanceId() {
         return disturbanceId;
@@ -59,5 +60,13 @@ public class DisturbanceDto {
 
     public void setReportImages(List<ReportImage> reportImages) {
         this.reportImages = reportImages;
+    }
+
+    public DisturbanceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DisturbanceStatus status) {
+        this.status = status;
     }
 }
