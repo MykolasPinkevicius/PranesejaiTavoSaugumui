@@ -47,13 +47,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static android.os.Build.HOST;
+import static saugumui.tavo.pranesimas.pranesimastavosaugumui.Environment.HOST;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private final int MY_PERMISSIONS_REQUEST_ACCES_FINE_LOCATION = 1;
-    private static String HOST = "http://158.129.225.30:8080";
     private TileOverlay yOverlay;
     private TileOverlay gOverlay;
     private TileOverlay rOverlay;
@@ -313,8 +312,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         rOverlay = addHeatMap("red", llR);
+        rOverlay.setVisible(false);
         yOverlay = addHeatMap("yellow", llY);
+        yOverlay.setVisible(false);
         gOverlay = addHeatMap("green", llG);
+        gOverlay.setVisible(false);
     }
 
 }

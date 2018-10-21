@@ -25,13 +25,13 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 
+import static saugumui.tavo.pranesimas.pranesimastavosaugumui.Environment.HOST;
+
 public class CameraAttemptNumberThree extends Activity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     private static String encoded;
-
-    private static String HOST = "http://158.129.225.30:8080";
 
     private Button sendButton;
 
