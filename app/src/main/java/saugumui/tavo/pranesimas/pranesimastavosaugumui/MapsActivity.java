@@ -199,7 +199,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        toastMe();
+//        toastMe();
         getReports();
 
 
@@ -242,7 +242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         float[] startPoints = {
-                0.9f, 1f
+                0.5f, 1f
         };
 
         Gradient gradient = new Gradient(colors, startPoints);

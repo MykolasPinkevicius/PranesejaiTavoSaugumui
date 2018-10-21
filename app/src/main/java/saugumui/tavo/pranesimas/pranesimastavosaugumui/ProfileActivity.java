@@ -6,6 +6,8 @@ import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +24,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static saugumui.tavo.pranesimas.pranesimastavosaugumui.Environment.HOST;
+
 public class ProfileActivity extends Activity {
 
     private ProgressBar progress;
     private TextView currentLevel;
+//    private ListView myReportList;
 
     private  int expToAdd = 5400;
 
@@ -53,9 +58,11 @@ public class ProfileActivity extends Activity {
 
         progress = this.findViewById(R.id.progressBar2);
         currentLevel = this.findViewById(R.id.currentLevelText);
+//        myReportList = this.findViewById(R.id.myReportsList);
 
         checkIfNeedToAddExp();
         setLevelText(1);
+//        updateMyReports();
 
     }
 
@@ -152,23 +159,31 @@ public class ProfileActivity extends Activity {
 
     }
 
-//    private List<NormalDisturbanceDto> getReports() {
+    private void updateMyReports() {
 //        RequestQueue queue = Volley.newRequestQueue(this);
 //
 ////        final List<NormalDisturbanceDto> NormalDisturbanceDtos = new ArrayList<>();
 //
 //        StringRequest stringRequest = new StringRequest(
 //                Request.Method.GET,
-//                HOST + "/v1/good-citizens/1",
+//                HOST + "/v1/disturbances?goodCitizenId=1",
 //                new Response.Listener<String>() {
 //                    @Override
 //                    public void onResponse(String response) {
 //                        String responseBody = new String(response.getBytes());
 //                        Gson gson = new Gson();
-//                        GoodCitizen goodCitizen = gson.fromJson(responseBody, GoodCitizen.class);
-//                        expToAdd()
-//                        addExp();
-////                        setLevelText(goodCitizen.getExp() / 1000);
+//                        List<NormalDisturbanceDto> myDisturbances = Arrays.asList(gson.fromJson(responseBody, NormalDisturbanceDto[].class));
+//
+//                        for (int i = 0; i < myDisturbances.size(); i++) {
+//                            TextView textView = new TextView(getThis());
+//                            textView.setText(myDisturbances.get(i).getDescription());
+//                            ListAdapter adapter = getMyReportList().getAdapter();
+//                            adapter.
+//
+//                            addView(textView);
+//                        }
+//
+//
 //                    }
 //                },
 //                new Response.ErrorListener() {
@@ -180,9 +195,15 @@ public class ProfileActivity extends Activity {
 //        );
 //
 //        queue.add(stringRequest);
-//
-//        return NormalDisturbanceDtos;
-////    }
+    }
+
+    private ProfileActivity getThis() {
+        return this;
+    }
+
+//    private ListView getMyReportList() {
+//        return myReportList;
+//    }
 //
 //    private void setExpToAdd(int expToAdd) {
 //        this.expToAdd = expToAdd;
