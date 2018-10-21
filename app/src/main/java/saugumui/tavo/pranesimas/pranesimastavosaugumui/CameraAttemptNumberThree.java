@@ -10,7 +10,10 @@ import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,13 +37,15 @@ public class CameraAttemptNumberThree extends Activity {
     private static String encoded;
 
     private Button sendButton;
+    private RelativeLayout imageLayout;
+    private LinearLayout buttonLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cam_again);
         this.imageView = (ImageView) this.findViewById(R.id.imageView1);
-        Button photoButton = (Button) this.findViewById(R.id.button1);
+        ImageButton photoButton = (ImageButton) this.findViewById(R.id.button1);
         photoButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -96,6 +101,33 @@ public class CameraAttemptNumberThree extends Activity {
             }
         });
 
+        this.imageLayout = this.findViewById(R.id.imageLayout);
+        this.buttonLayout = this.findViewById(R.id.buttonLayout);
+        this.setCategoryListeners();
+    }
+
+    private void setCategoryListeners() {
+
+        this.findViewById(R.id.cat1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getDrawable(R.drawable.shape_green));
+            }
+        });
+        this.findViewById(R.id.cat2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getDrawable(R.drawable.shape_green));
+            }
+        });
+
+        this.findViewById(R.id.cat3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getDrawable(R.drawable.shape_green));
+            }
+        });
+
     }
 
     public CameraAttemptNumberThree getThis() {
@@ -129,6 +161,7 @@ public class CameraAttemptNumberThree extends Activity {
             byte[] byteArray = byteArrayOutputStream.toByteArray();
             encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
             this.sendButton.setAlpha(1f);
+            this.imageLayout.setAlpha(1f);
 
         }
     }

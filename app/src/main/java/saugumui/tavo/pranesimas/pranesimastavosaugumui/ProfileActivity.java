@@ -139,7 +139,7 @@ public class ProfileActivity extends Activity {
     }
 
     private void showLevelUpAnimation() {
-        Toast toast = Toast.makeText(this, "level up!", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "Level up!", Toast.LENGTH_SHORT);
         toast.show();
     }
 
