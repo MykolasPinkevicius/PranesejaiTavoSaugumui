@@ -1,5 +1,6 @@
 function initMap() {
   var myVilnius = { lat: 54.687157, lng: 25.279652 };
+  var infowindow = new google.maps.InfoWindow();
 
   $.ajax({
     type: "GET",
@@ -28,7 +29,7 @@ function initMap() {
           position: new google.maps.LatLng(data[i].location.latitude, data[i].location.longitude),
           icon: image
         });
-        clickMarker(marker, data[i].disturbanceId);
+        clickMarker(marker, data[i].disturbanceId, infowindow);
       }
     }
 
@@ -120,19 +121,17 @@ function initMap() {
         stylers: [{ color: '#17263c' }]
       }
     ]
-      
+
   });
 }
 
 
-function clickMarker(marker, id,) {
+function clickMarker(marker, id, infowindow) {
   (function (marker, id) {
     // add click event
-    var image = new Image();
-    
     google.maps.event.addListener(marker, 'click', function () {
-      // infowindow.open(map, this);
-      console.log(map);
+      var image = new Image();
+
       $.ajax({
         type: "GET",
         url: "http://158.129.224.89:8080/v1/disturbances/" + id,
@@ -145,22 +144,13 @@ function clickMarker(marker, id,) {
           msg.innerHTML = data.description;
 
           image.src = "data:image/png;base64," + data.reportImages[0].content;
-          image.style = "width:200px; height:200px";
+          // image.style = "width:200px; height:200px";
           imageHTML.innerHTML = '<img style="width:450px"; src="' + image.src + '" />';
-          infowindow = new google.maps.InfoWindow({
-            content: image,
-            maxWidth: 400
-
-          });
+          var imagetest = '<img style="width:200px; height:200px"; src="' + image.src + '" />';
+          infowindow.setContent(imagetest);
           infowindow.open(map, marker);
         }
       });
     });
   })(marker, id);
-}
-
-function hideAllInfoWindows(map) {
-  markers.forEach(function (marker) {
-    marker.infowindow.close(map, marker);
-  });
 }
