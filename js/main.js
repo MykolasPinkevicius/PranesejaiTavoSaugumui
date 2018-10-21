@@ -131,26 +131,81 @@ function clickMarker(marker, id, infowindow) {
     // add click event
     google.maps.event.addListener(marker, 'click', function () {
       var image = new Image();
-
       $.ajax({
         type: "GET",
         url: "http://158.129.224.89:8080/v1/disturbances/" + id,
         data: {},
         success: function (data) {
-          var name = document.getElementById('viewName');
-          var msg = document.getElementById('viewMsg');
-          let imageHTML = document.getElementById('viewImage');
-          name.innerHTML = data.disturbanceType;
-          msg.innerHTML = data.description;
-
           image.src = "data:image/png;base64," + data.reportImages[0].content;
-          // image.style = "width:200px; height:200px";
-          imageHTML.innerHTML = '<img style="width:450px"; src="' + image.src + '" />';
+
+          let newDiv = document.createElement("div");
+          
+          let h3 = document.createElement("h2");
+          h3.innerHTML = data.disturbanceType;
+          h3.style.textAlign = "center"
+          newDiv.appendChild(h3);
+
+          let descriptionImage = document.createElement("div");
+          descriptionImage.innerHTML = '<img style="width:300px; height:200px"; src="' + image.src + '" />';
+          descriptionImage.style.marginLeft = "auto";
+          descriptionImage.style.marginRight = "auto";
+          descriptionImage.style.width = "100%";
+          descriptionImage.style.display = "block";
+          newDiv.appendChild(descriptionImage);
+
+          let description = document.createElement("h4");
+          description.style.maxWidth = "300px"; 
+          description.innerHTML =  data.description + " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+          newDiv.appendChild(description);
+
+          let buttonDiv = document.createElement("div");
+          let confirmDeleteDiv = document.createElement("div");
+
+
+          let confirmButton = document.createElement("input");
+          confirmButton.type = "button";
+          confirmButton.onclick = confirmReport(id);
+          confirmButton.value = "Patvirtinti pranešimą";
+
+          buttonDiv.appendChild(confirmButton);
+          
+          confirmButton = document.createElement("input");
+          confirmButton.type = "button";
+          confirmButton.onclick = deleteReport(id);
+          confirmButton.value = "Ištrinti";
+          
+          buttonDiv.appendChild(confirmButton);
+          
+          confirmButton = document.createElement("input");
+          confirmButton.type = "button";
+          confirmButton.onclick = completedReport(id);
+          confirmButton.value = "Problema Išspręsta";
+          
+          confirmDeleteDiv.appendChild(confirmButton);
+          
+          buttonDiv.appendChild(confirmDeleteDiv);
+
+          newDiv.appendChild(buttonDiv);
+          
           var imagetest = '<img style="width:200px; height:200px"; src="' + image.src + '" />';
-          infowindow.setContent(imagetest);
+          infowindow.setContent(newDiv);
+          // infowindow.setContent();
           infowindow.open(map, marker);
         }
       });
     });
   })(marker, id);
 }
+
+let confirmReport = (id) => {
+  $.ajax({
+    type: "POST",
+    url: "http://158.129.224.89:8080//v1/disturbances/"+id+"/status",
+    data: {},
+    success: function (data) {
+      
+      }
+    }
+
+  })
+} 
