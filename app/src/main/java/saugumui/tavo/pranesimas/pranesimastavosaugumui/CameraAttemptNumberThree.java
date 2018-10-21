@@ -88,6 +88,14 @@ public class CameraAttemptNumberThree extends Activity {
             }
         });
 
+        View mapMenuButton2 = this.findViewById(R.id.action_profile);
+        mapMenuButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProfileActivity();
+            }
+        });
+
     }
 
     public CameraAttemptNumberThree getThis() {
@@ -213,6 +221,11 @@ public class CameraAttemptNumberThree extends Activity {
 
     protected void openMapsActivity() {
         Intent myIntent = new Intent(this, MapsActivity.class);
+        startActivity(myIntent);
+    }
+
+    protected void openProfileActivity() {
+        Intent myIntent = new Intent(this, ProfileActivity.class);
         startActivity(myIntent);
     }
 }

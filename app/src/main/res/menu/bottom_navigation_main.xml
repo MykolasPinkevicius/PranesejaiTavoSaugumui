@@ -14,9 +14,9 @@
         android:title="Report"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/action_profile"
         android:enabled="true"
         android:icon="@drawable/common_full_open_on_phone"
-        android:title="@string/bottom_sheet_behavior"
+        android:title="Profile"
         app:showAsAction="ifRoom" />
 </menu>
