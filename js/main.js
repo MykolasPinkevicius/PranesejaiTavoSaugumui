@@ -139,9 +139,9 @@ function clickMarker(marker, id, infowindow) {
           image.src = "data:image/png;base64," + data.reportImages[0].content;
 
           let newDiv = document.createElement("div");
-          
+
           let h3 = document.createElement("h2");
-          h3.innerHTML = data.disturbanceType;
+          h3.innerHTML = "Šiukšlės";
           h3.style.textAlign = "center"
           newDiv.appendChild(h3);
 
@@ -154,8 +154,8 @@ function clickMarker(marker, id, infowindow) {
           newDiv.appendChild(descriptionImage);
 
           let description = document.createElement("h4");
-          description.style.maxWidth = "300px"; 
-          description.innerHTML =  data.description + " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+          description.style.maxWidth = "300px";
+          description.innerHTML = data.description + " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
           newDiv.appendChild(description);
 
           let buttonDiv = document.createElement("div");
@@ -164,29 +164,46 @@ function clickMarker(marker, id, infowindow) {
 
           let confirmButton = document.createElement("input");
           confirmButton.type = "button";
-          confirmButton.onclick = confirmReport(id);
+          confirmButton.onclick = function () {
+            $.ajax({
+              type: "POST",
+              url: "http://158.129.224.89:8080//v1/disturbances/" + id + "/status",
+              dataType: 'json',
+              contentType: "application/json",
+              data: JSON.stringify({ status: "INPROGRESS" }),
+              success: function (data) {
+                console.log("Noretum");
+              }
+            })
+
+            console.log('patvirtinti');
+          }
           confirmButton.value = "Patvirtinti pranešimą";
 
           buttonDiv.appendChild(confirmButton);
-          
+
           confirmButton = document.createElement("input");
           confirmButton.type = "button";
-          confirmButton.onclick = deleteReport(id);
+          confirmButton.onclick = function () {
+            console.log("aaaaa");
+          };
           confirmButton.value = "Ištrinti";
-          
+
           buttonDiv.appendChild(confirmButton);
-          
+
           confirmButton = document.createElement("input");
           confirmButton.type = "button";
-          confirmButton.onclick = completedReport(id);
+          confirmButton.onclick = function () {
+            console.log('donea');
+          };
           confirmButton.value = "Problema Išspręsta";
-          
+
           confirmDeleteDiv.appendChild(confirmButton);
-          
+
           buttonDiv.appendChild(confirmDeleteDiv);
 
           newDiv.appendChild(buttonDiv);
-          
+
           var imagetest = '<img style="width:200px; height:200px"; src="' + image.src + '" />';
           infowindow.setContent(newDiv);
           // infowindow.setContent();
@@ -197,15 +214,17 @@ function clickMarker(marker, id, infowindow) {
   })(marker, id);
 }
 
-let confirmReport = (id) => {
-  $.ajax({
-    type: "POST",
-    url: "http://158.129.224.89:8080//v1/disturbances/"+id+"/status",
-    data: {},
-    success: function (data) {
-      
-      }
-    }
+// let confirmReport = (id) => {
+//   $.ajax({
+//     type: "POST",
+//     url: "http://158.129.224.89:8080//v1/disturbances/"+id+"/status",
+//     data: {
+//       status: JSON.stringify("INPROGRESS")
+//     },
+//     success: function (data) {
+//       console.log("Noretum");
+//       }
+//     })
 
-  })
-} 
+//   }
+
